@@ -1,5 +1,5 @@
 provider "aws" {
-  region = var.aws_region
+  region  = var.aws_region
   profile = "default"
 
   assume_role {
@@ -8,7 +8,7 @@ provider "aws" {
 
   default_tags {
     tags = {
-      aws-exam-resource: true
+      aws-exam-resource : true
     }
   }
 }
