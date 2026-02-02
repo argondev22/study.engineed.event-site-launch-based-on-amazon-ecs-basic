@@ -2,7 +2,7 @@ provider "aws" {
   region = "ap-northeast-1"
 
   assume_role {
-    role_arn = ""
+    role_arn = var.aws_assume_role_arn
   }
 
   default_tags {
