@@ -1,6 +1,8 @@
 module "vpc" {
   source = "./modules/vpc"
 
-  vpc_name           = "${var.project}-vpc"
-  availability_zones = ["${var.aws_region}a", "${var.aws_region}c"]
+  vpc_name            = "${var.project}-vpc"
+  vpc_cidr            = "10.0.0.0/16"
+  public_subnet_cidrs = ["10.0.10.0/24", "10.0.20.0/24"]
+  availability_zones  = ["${var.aws_region}a", "${var.aws_region}c"]
 }
