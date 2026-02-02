@@ -6,6 +6,8 @@ provider "aws" {
   }
 
   default_tags {
-    tags = {}
+    tags = {
+      aws-exam-resource: true
+    }
   }
 }
