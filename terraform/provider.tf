@@ -1,5 +1,6 @@
 provider "aws" {
   region = var.aws_region
+  profile = "default"
 
   assume_role {
     role_arn = var.aws_assume_role_arn
