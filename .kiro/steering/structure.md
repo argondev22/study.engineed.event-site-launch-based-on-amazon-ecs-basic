@@ -2,7 +2,7 @@
 
 ## Root Directory Organization
 
-```
+```plaintext
 .
 ├── .devcontainer/       # Docker DevContainer configuration
 ├── .github/             # GitHub templates (issues, PRs, workflows)
