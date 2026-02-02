@@ -1,2 +1,2 @@
 aws_assume_role_arn = "arn:aws:iam::123456789012:role/YourRoleName"
-project = "event-site"
+project             = "event-site"
