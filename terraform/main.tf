@@ -13,3 +13,10 @@ module "s3" {
 
   bucket_name = "${var.project}-bucket"
 }
+
+module "codecommit" {
+  source = "./modules/codecommit"
+
+  repository_name = "${var.project}-repo"
+  repository_discription = "CodeCommit repository for ${var.project}"
+}
