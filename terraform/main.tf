@@ -17,6 +17,18 @@ module "s3" {
 module "codecommit" {
   source = "./modules/codecommit"
 
-  repository_name = "${var.project}-repo"
+  repository_name        = "${var.project}-repo"
   repository_discription = "CodeCommit repository for ${var.project}"
+}
+
+module "ecs" {
+  source = "./modules/ecs"
+
+  cluster_name = "${var.project}-cluster"
+  vpc_id = module.vpc.vpc_id
+  public_subnet_ids = module.vpc.public_subnet_ids
+  private_subnet_ids = module.vpc.private_subnet_ids
+  container_image = "nginx:latest"
+  container_port = 80
+  desired_count = 2
 }
