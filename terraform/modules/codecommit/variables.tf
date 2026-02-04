@@ -1,22 +1,22 @@
 variable "repository_name" {
   description = "Name of the CodeCommit repository"
-  type = string
+  type        = string
 }
 
 variable "repository_discription" {
   description = "Description of the CodeCommit repository"
-  type = string
-  default = ""
+  type        = string
+  default     = ""
 }
 
 variable "default_branch" {
   description = "Default branch name"
-    type = string
-    default = "main"
+  type        = string
+  default     = "main"
 }
 
 variable "tags" {
   description = "A mapping of tags to assign to the resource"
-  type = map(string)
-  default = {}
+  type        = map(string)
+  default     = {}
 }
