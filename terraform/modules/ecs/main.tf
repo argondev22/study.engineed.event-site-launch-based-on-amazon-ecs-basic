@@ -104,7 +104,7 @@ resource "aws_lb_listener" "main" {
 resource "aws_iam_role" "ecs_task_execution" {
   name = "${var.cluster_name}-ecs-task-execution-role"
 
-  assume_role_policy = jsondecode({
+  assume_role_policy = jsonencode({
     "Version" : "2012-10-17",
     "Statement" : [
       {
@@ -130,13 +130,13 @@ resource "aws_cloudwatch_log_group" "main" {
 
 resource "aws_ecs_task_definition" "main" {
   family                   = var.cluster_name
-  network_mode             = "awspvc"
+  network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
   cpu                      = "256"
   memory                   = "512"
   execution_role_arn       = aws_iam_role.ecs_task_execution.arn
 
-  container_definitions = jsondecode[{
+  container_definitions = jsonencode([{
     name      = var.cluster_name
     image     = var.container_image
     essential = true
@@ -149,12 +149,12 @@ resource "aws_ecs_task_definition" "main" {
     logConfiguration = {
       logDriver = "awslogs"
       options = {
-        awslogs-group         = aws_cloudwatch_log_group.main.name
-        awslogs-region        = data.aws_region.current.name
-        awslogs-stream-prefix = "ecs"
+        "awslogs-group"         = aws_cloudwatch_log_group.main.name
+        "awslogs-region"        = data.aws_region.current.name
+        "awslogs-stream-prefix" = "ecs"
       }
     }
-  }]
+  }])
 }
 
 resource "aws_ecs_service" "main" {
