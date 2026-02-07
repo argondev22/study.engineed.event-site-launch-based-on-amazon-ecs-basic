@@ -32,3 +32,9 @@ module "ecs" {
   container_port     = 80
   desired_count      = 2
 }
+
+module "ecr" {
+  source = "./modules/ecr"
+
+  repository_name = "${var.project}-ecr-repo"
+}
