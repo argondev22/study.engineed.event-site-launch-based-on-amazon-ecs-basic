@@ -1,5 +1,6 @@
 .PHONY: help install format format-check lint clean
 .PHONY: tf-init tf-plan tf-apply tf-destroy tf-fmt tf-validate tf-output tf-clean
+.PHONY: tf-lint tf-lint-init tf-security
 .DEFAULT_GOAL := help
 
 # Colors for output
@@ -91,6 +92,30 @@ tf-refresh: ## Refresh Terraform state
 tf-show: ## Show current Terraform state
 	cd $(TF_DIR) && terraform show
 
+tf-lint-init: ## Initialize TFLint
+	@echo "$(CYAN)Initializing TFLint...$(NC)"
+	@if ! command -v tflint > /dev/null; then \
+		echo "$(YELLOW)TFLint not found. Installing...$(NC)"; \
+		brew install tflint; \
+	fi
+	cd $(TF_DIR) && tflint --init
+
+tf-lint: ## Run TFLint on Terraform code
+	@echo "$(CYAN)Running TFLint...$(NC)"
+	@if ! command -v tflint > /dev/null; then \
+		echo "$(RED)TFLint not found. Run 'make tf-lint-init' first.$(NC)"; \
+		exit 1; \
+	fi
+	cd $(TF_DIR) && tflint --recursive --format compact
+
+tf-security: ## Run TFSec security scan
+	@echo "$(CYAN)Running TFSec security scan...$(NC)"
+	@if ! command -v tfsec > /dev/null; then \
+		echo "$(YELLOW)TFSec not found. Installing...$(NC)"; \
+		brew install tfsec; \
+	fi
+	cd $(TF_DIR) && tfsec .
+
 #==============================================================================
 # Combined Workflows
 #==============================================================================
@@ -103,3 +128,6 @@ deploy: tf-fmt tf-validate tf-plan ## Prepare for deployment (format, validate, 
 
 check: format-check lint tf-fmt tf-validate ## Run all checks (format, lint, terraform)
 	@echo "$(GREEN)All checks passed!$(NC)"
+
+check-all: format-check lint tf-fmt tf-validate tf-lint tf-security ## Run all checks including security
+	@echo "$(GREEN)All checks including security passed!$(NC)"
