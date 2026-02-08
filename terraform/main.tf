@@ -8,10 +8,17 @@ module "vpc" {
   availability_zones   = ["${var.aws_region}a", "${var.aws_region}c"]
 }
 
-module "s3" {
+module "s3_assets" {
   source = "./modules/s3"
 
-  bucket_name = "${var.project}-bucket"
+  bucket_name = "${var.project}-bucket-for-assets"
+}
+
+module "s3_artifacts" {
+  source = "./modules/s3"
+
+  bucket_name             = "${var.project}-bucket-for-artifacts"
+  enable_lifecycle_policy = true
 }
 
 module "codecommit" {
@@ -47,5 +54,5 @@ module "codebuild" {
   ecr_repository_arn  = module.ecr.repository_arn
   image_repo_name     = "${var.project}-app"
   container_name      = "${var.project}-cluster"
-  artifact_bucket_arn = module.s3.bucket_arn
+  artifact_bucket_arn = module.s3_artifacts.bucket_arn
 }

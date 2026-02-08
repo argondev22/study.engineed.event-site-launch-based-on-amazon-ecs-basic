@@ -22,3 +22,17 @@ resource "aws_s3_bucket_versioning" "main" {
     status = "Enabled"
   }
 }
+
+resource "aws_s3_bucket_lifecycle_configuration" "main" {
+  count  = var.enable_lifecycle_policy ? 1 : 0
+  bucket = aws_s3_bucket.main.id
+
+  rule {
+    id     = "expire-old-artifacts"
+    status = "Enabled"
+
+    expiration {
+      days = var.lifecycle_expiration_days
+    }
+  }
+}
