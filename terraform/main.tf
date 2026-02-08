@@ -38,3 +38,14 @@ module "ecr" {
 
   repository_name = "${var.project}-ecr-repo"
 }
+
+module "codebuild" {
+  source = "./modules/codebuild"
+
+  project_name        = "${var.project}-build"
+  ecr_repository_url  = module.ecr.repository_url
+  ecr_repository_arn  = module.ecr.repository_arn
+  image_repo_name     = "${var.project}-app"
+  container_name      = "${var.project}-cluster"
+  artifact_bucket_arn = module.s3.bucket_arn
+}
