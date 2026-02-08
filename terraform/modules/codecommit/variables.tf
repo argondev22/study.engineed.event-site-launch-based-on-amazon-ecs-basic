@@ -3,7 +3,7 @@ variable "repository_name" {
   type        = string
 }
 
-variable "repository_discription" {
+variable "repository_description" {
   description = "Description of the CodeCommit repository"
   type        = string
   default     = ""

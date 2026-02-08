@@ -18,7 +18,7 @@ module "codecommit" {
   source = "./modules/codecommit"
 
   repository_name        = "${var.project}-repo"
-  repository_discription = "CodeCommit repository for ${var.project}"
+  repository_description = "CodeCommit repository for ${var.project}"
 }
 
 module "ecs" {
