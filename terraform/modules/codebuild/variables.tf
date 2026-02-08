@@ -51,9 +51,3 @@ variable "buildspec_path" {
   type        = string
   default     = "buildspec.yml"
 }
-
-variable "tags" {
-  description = "Tags to apply to resources"
-  type        = map(string)
-  default     = {}
-}
