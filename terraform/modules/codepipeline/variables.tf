@@ -54,12 +54,6 @@ variable "artifact_bucket_arn" {
   type        = string
 }
 
-variable "tags" {
-  description = "Tags to apply to resources"
-  type        = map(string)
-  default     = {}
-}
-
 variable "ecs_cluster_arn" {
   description = "ECS cluster ARN"
   type        = string
