@@ -31,6 +31,10 @@ resource "aws_s3_bucket_lifecycle_configuration" "main" {
     id     = "expire-old-artifacts"
     status = "Enabled"
 
+    filter {
+      prefix = ""
+    }
+
     expiration {
       days = var.lifecycle_expiration_days
     }
